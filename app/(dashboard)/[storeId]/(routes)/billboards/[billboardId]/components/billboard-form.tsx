@@ -54,9 +54,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
     const onSubmit = async (data: BillboardFormValues) => {
         try {
             setLoading(true)
-            await axios.patch(`/api/stores/${params.storeId}`, data);
+            if (initialData) {
+                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+            } else {
+                await axios.post(`/api/${params.storeId}/billboards`, data);
+            }
             router.refresh()
-            toast.success("Papan Iklan berhasil diperbarui.")
+            toast.success(toastMessage)
         } catch (error) {
             toast.error("Gagal memperbarui Papan Iklan, coba beberapa saat lagi.")
         } finally {
@@ -67,12 +71,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/stores/${params.storeId}`)
+            await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`)
             router.refresh()
             router.push('/')
             toast.success("Papan Iklan dihapus.")
         } catch (error) {
-            toast.error("Gagal menghapus Papan Iklan.")
+            toast.error("Gagal menghapus Papan Iklan, pastikan anda menghapus semua kategori produk yang terkait terlebih dahulu.")
         } finally {
             setLoading(false)
             setOpen(false)
