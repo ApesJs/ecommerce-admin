@@ -2,6 +2,7 @@ import {CategoryClient} from "@/app/(dashboard)/[storeId]/(routes)/categories/co
 import prismadb from "@/lib/prismadb";
 import {CategoryColumn} from "@/app/(dashboard)/[storeId]/(routes)/categories/components/colomns";
 import {format} from "date-fns";
+import {id} from "date-fns/locale";
 
 const CategoriesPage = async ({ params }: { params: {storeId: string} }) => {
     const categories = await prismadb.category.findMany({
@@ -20,7 +21,7 @@ const CategoriesPage = async ({ params }: { params: {storeId: string} }) => {
         id: item.id,
         name: item.name,
         billboardLabel: item.billboard.label,
-        createdAt: format(item.createdAt, 'MMMM do, yyyy')
+        createdAt: format(item.createdAt, 'dd MMMM yyyy', { locale: id })
     }))
 
     return(
