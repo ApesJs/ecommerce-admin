@@ -5,8 +5,14 @@ import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {Separator} from "@/components/ui/separator";
 import {useParams, useRouter} from "next/navigation";
+import {BillboardColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/billboards/components/colomns";
+import {DataTable} from "@/components/ui/data-table";
 
-export const BillboardClient = () => {
+interface BillboardClientProps {
+    data: BillboardColumn[]
+}
+
+export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
     const router = useRouter();
     const params = useParams();
 
@@ -14,7 +20,7 @@ export const BillboardClient = () => {
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title="Papan Iklan (0)"
+                    title={`Papan Iklan (${data.length})`}
                     description="Kelola papan iklan untuk toko Anda"
                 />
                 <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
@@ -23,6 +29,7 @@ export const BillboardClient = () => {
                 </Button>
             </div>
             <Separator/>
+            <DataTable columns={columns} data={data} searchKey="label" searchLabel="Papan Iklan" />
         </>
     )
 }

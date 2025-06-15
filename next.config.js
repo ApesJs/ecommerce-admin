@@ -4,7 +4,8 @@ const nextConfig = {
         serverActions: true
     },
     images: {
-        domains: ['res.cloudinary.com'],
+        domains: ['m101.sgp1.digitaloceanspaces.com'],
+        remotePatterns: [{ protocol: "https", hostname: "res.cloudinary.com" }],
     }
 }
 

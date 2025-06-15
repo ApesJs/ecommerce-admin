@@ -15,8 +15,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {useParams, useRouter} from "next/navigation";
 import {AlertModal} from "@/components/modals/alert-modal";
-import {ApiAlert} from "@/components/ui/api-alert";
-import {useOrigin} from "@/hooks/use-origin";
 import ImageUpload from "@/components/ui/image-upload";
 
 interface BillboardFormProps {
@@ -33,7 +31,6 @@ type BillboardFormValues = z.infer<typeof formSchema>
 export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
     const params = useParams()
     const router = useRouter()
-    const origin = useOrigin()
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -60,6 +57,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
                 await axios.post(`/api/${params.storeId}/billboards`, data);
             }
             router.refresh()
+            router.push(`/${params.storeId}/billboards`)
             toast.success(toastMessage)
         } catch (error) {
             toast.error("Gagal memperbarui Papan Iklan, coba beberapa saat lagi.")
@@ -73,7 +71,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
             setLoading(true)
             await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`)
             router.refresh()
-            router.push('/')
+            router.push(`/${params.storeId}/billboards`)
             toast.success("Papan Iklan dihapus.")
         } catch (error) {
             toast.error("Gagal menghapus Papan Iklan, pastikan anda menghapus semua kategori produk yang terkait terlebih dahulu.")
