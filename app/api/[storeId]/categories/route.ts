@@ -7,19 +7,19 @@ export async function POST(req: Request, { params }: { params: { storeId: string
         const user = await currentUser()
         const body = await req.json()
 
-        const { label, imageUrl } = body
+        const { name, billboardId } = body
 
         if (!user?.id) {
             return new NextResponse("Unauthenticated", { status: 401 })
         }
 
-        if (!label) {
-            return new NextResponse("label is required", { status: 400 })
+        if (!name) {
+            return new NextResponse("name is required", { status: 400 })
         }
 
-        // if (!imageUrl) {
-        //     return new NextResponse("imageUrl is required", { status: 400 })
-        // }
+        if (!billboardId) {
+            return new NextResponse("billboardId is required", { status: 400 })
+        }
 
         if (!params.storeId) {
             return new NextResponse("storeId is required", { status: 400 })
@@ -36,16 +36,16 @@ export async function POST(req: Request, { params }: { params: { storeId: string
             return new NextResponse("Unauthorized", { status: 403 })
         }
 
-        const billboard = await prismadb.billboard.create({
+        const category = await prismadb.category.create({
             data:{
-                label,
-                imageUrl,
+                name,
+                billboardId,
                 storeId: params.storeId,
             }
         })
-        return NextResponse.json(billboard, { status: 201 })
+        return NextResponse.json(category, { status: 201 })
     } catch (error) {
-        console.log("[BILLBOARDS_POST]", error);
+        console.log("[CATEGORIES_POST]", error);
         return new NextResponse("Internal Server Error", { status: 500 })
     }
 }
@@ -56,14 +56,14 @@ export async function GET(req: Request, { params }: { params: { storeId: string 
             return new NextResponse("storeId is required", { status: 400 })
         }
 
-        const billboards = await prismadb.billboard.findMany({
+        const categories = await prismadb.category.findMany({
             where:{
                 storeId: params.storeId,
             }
         })
-        return NextResponse.json(billboards, { status: 201 })
+        return NextResponse.json(categories, { status: 201 })
     } catch (error) {
-        console.log("[BILLBOARDS_GET]", error);
+        console.log("[CATEGORIES_GET]", error);
         return new NextResponse("Internal Server Error", { status: 500 })
     }
 }
