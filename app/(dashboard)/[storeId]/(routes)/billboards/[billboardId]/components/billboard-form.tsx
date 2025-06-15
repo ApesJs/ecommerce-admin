@@ -1,6 +1,6 @@
 "use client"
 
-import {Store} from "@prisma/client";
+import {Billboard} from "@prisma/client";
 import {Heading} from "@/components/ui/heading";
 import {Button} from "@/components/ui/button";
 import {Trash} from "lucide-react";
@@ -17,18 +17,20 @@ import {useParams, useRouter} from "next/navigation";
 import {AlertModal} from "@/components/modals/alert-modal";
 import {ApiAlert} from "@/components/ui/api-alert";
 import {useOrigin} from "@/hooks/use-origin";
+import ImageUpload from "@/components/ui/image-upload";
 
-interface SettingsFormProps {
-    initialData: Store
+interface BillboardFormProps {
+    initialData: Billboard | null;
 }
 
 const formSchema = z.object({
-    name: z.string().min(1),
+    label: z.string().min(1),
+    imageUrl: z.string().min(1),
 })
 
-type SettingsFormValues = z.infer<typeof formSchema>
+type BillboardFormValues = z.infer<typeof formSchema>
 
-export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
+export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
     const params = useParams()
     const router = useRouter()
     const origin = useOrigin()
@@ -36,19 +38,27 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    const form = useForm<SettingsFormValues>({
+    const title = initialData ? "Perbarui Papan Iklan" : "Buat Papan Iklan"
+    const description = initialData ? "Perbarui papan iklan toko Anda" : "Buat papan iklan untuk toko Anda"
+    const toastMessage = initialData ? "Papan Iklan diperbarui." : "Papan Iklan dibuat."
+    const action = initialData ? "Perbarui" : "Buat"
+
+    const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData
+        defaultValues: initialData || {
+            label: '',
+            imageUrl: ''
+        }
     })
 
-    const onSubmit = async (data: SettingsFormValues) => {
+    const onSubmit = async (data: BillboardFormValues) => {
         try {
             setLoading(true)
             await axios.patch(`/api/stores/${params.storeId}`, data);
             router.refresh()
-            toast.success("Pengaturan toko berhasil diperbarui.")
+            toast.success("Papan Iklan berhasil diperbarui.")
         } catch (error) {
-            toast.error("Gagal memperbarui pengaturan toko, coba beberapa saat lagi.")
+            toast.error("Gagal memperbarui Papan Iklan, coba beberapa saat lagi.")
         } finally {
             setLoading(false)
         }
@@ -60,9 +70,9 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
             await axios.delete(`/api/stores/${params.storeId}`)
             router.refresh()
             router.push('/')
-            toast.success("Toko berhasil dihapus.")
+            toast.success("Papan Iklan dihapus.")
         } catch (error) {
-            toast.error("Gagal menghapus toko, pastikan anda menghapus semua produk dan kategori terlebih dahulu.")
+            toast.error("Gagal menghapus Papan Iklan.")
         } finally {
             setLoading(false)
             setOpen(false)
@@ -79,17 +89,19 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
             />
             <div className="flex items-center justify-between">
                 <Heading
-                    title="Pengaturan"
-                    description="Pengaturan toko Anda"
+                    title={title}
+                    description={description}
                 />
-                <Button
-                    disabled={loading}
-                    variant="destructive"
-                    size="icon"
-                    onClick={() => setOpen(true)}
-                >
-                    <Trash className="h-4 w-4"/>
-                </Button>
+                { initialData && (
+                    <Button
+                        disabled={loading}
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => setOpen(true)}
+                    >
+                        <Trash className="h-4 w-4"/>
+                    </Button>
+                )}
             </div>
             <Separator/>
             <Form {...form}>
@@ -97,15 +109,33 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-8 w-full"
                 >
+                    <FormField
+                        control={form.control}
+                        name="imageUrl"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Gambar Papan Iklan</FormLabel>
+                                <FormControl>
+                                    <ImageUpload
+                                        value={field.value ? [field.value] : []}
+                                        disabled={loading}
+                                        onChange={(url) => field.onChange(url)}
+                                        onRemove={() => field.onChange('')}
+                                    />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
                     <div className="grid grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="label"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nama Toko</FormLabel>
+                                    <FormLabel>Nama Papan Iklan</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Masukan Nama Toko" {...field} />
+                                        <Input disabled={loading} placeholder="Masukan Nama Papan Iklan" {...field} />
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
@@ -113,16 +143,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
                         />
                     </div>
                     <Button disabled={loading} className="ml-auto" type="submit">
-                        Simpan Perubahan
+                        {action}
                     </Button>
                 </form>
             </Form>
             <Separator/>
-            <ApiAlert
-                title="NEXT_PUBLIC_API_URL"
-                description={`${origin}/api/${params.storeId}`}
-                variant="public"
-            />
         </>
     )
 }
