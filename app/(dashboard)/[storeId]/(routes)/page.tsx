@@ -1,7 +1,7 @@
 const DashboardPage = () => {
     return (
-        <div>
-            This is the dashboard page for the store.
+        <div className="flex items-center justify-center h-screen">
+            Dashboard Page (Under Construction)
         </div>
     )
 }
