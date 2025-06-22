@@ -39,7 +39,7 @@ export const CellActions: React.FC<CellActionProps> = ({ data }) => {
             router.refresh()
             toast.success("Produk dihapus.")
         } catch (error) {
-            toast.error("Gagal menghapus Produk, pastikan anda menghapus semua kategori produk yang terkait terlebih dahulu.")
+            toast.error("Gagal menghapus Produk, coba beberapa saat lagi.")
         } finally {
             setLoading(false)
             setOpen(false)
