@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {Separator} from "@/components/ui/separator";
 import {useParams, useRouter} from "next/navigation";
-import {ColorColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/colors/components/colomns";
+import {ColorColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/colors/components/columns";
 import {DataTable} from "@/components/ui/data-table";
 
 interface ColorClientProps {

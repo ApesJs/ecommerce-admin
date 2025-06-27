@@ -1,6 +1,6 @@
 import {OrderClient} from "@/app/(dashboard)/[storeId]/(routes)/orders/components/client";
 import prismadb from "@/lib/prismadb";
-import {OrderColumn} from "@/app/(dashboard)/[storeId]/(routes)/orders/components/colomns";
+import {OrderColumn} from "@/app/(dashboard)/[storeId]/(routes)/orders/components/columns";
 import {format} from "date-fns";
 import {id} from "date-fns/locale";
 import {formatter} from "@/lib/utils";

@@ -1,6 +1,6 @@
 import {CategoryClient} from "@/app/(dashboard)/[storeId]/(routes)/categories/components/client";
 import prismadb from "@/lib/prismadb";
-import {CategoryColumn} from "@/app/(dashboard)/[storeId]/(routes)/categories/components/colomns";
+import {CategoryColumn} from "@/app/(dashboard)/[storeId]/(routes)/categories/components/columns";
 import {format} from "date-fns";
 import {id} from "date-fns/locale";
 

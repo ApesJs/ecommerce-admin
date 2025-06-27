@@ -1,6 +1,6 @@
 "use client"
 
-import {ColorColumn} from "@/app/(dashboard)/[storeId]/(routes)/colors/components/colomns";
+import {ColorColumn} from "@/app/(dashboard)/[storeId]/(routes)/colors/components/columns";
 import {
     DropdownMenu,
     DropdownMenuContent,

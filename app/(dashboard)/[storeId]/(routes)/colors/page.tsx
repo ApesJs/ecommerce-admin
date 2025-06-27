@@ -1,6 +1,6 @@
 import {ColorClient} from "@/app/(dashboard)/[storeId]/(routes)/colors/components/client";
 import prismadb from "@/lib/prismadb";
-import {ColorColumn} from "@/app/(dashboard)/[storeId]/(routes)/colors/components/colomns";
+import {ColorColumn} from "@/app/(dashboard)/[storeId]/(routes)/colors/components/columns";
 import {format} from "date-fns";
 import {id} from "date-fns/locale";
 

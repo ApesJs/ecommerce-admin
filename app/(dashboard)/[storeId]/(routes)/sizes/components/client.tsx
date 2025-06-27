@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {Separator} from "@/components/ui/separator";
 import {useParams, useRouter} from "next/navigation";
-import {SizeColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/colomns";
+import {SizeColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/columns";
 import {DataTable} from "@/components/ui/data-table";
 
 interface SizeClientProps {

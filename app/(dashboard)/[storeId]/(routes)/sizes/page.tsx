@@ -1,6 +1,6 @@
 import {SizeClient} from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/client";
 import prismadb from "@/lib/prismadb";
-import {SizeColumn} from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/colomns";
+import {SizeColumn} from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/columns";
 import {format} from "date-fns";
 import {id} from "date-fns/locale";
 

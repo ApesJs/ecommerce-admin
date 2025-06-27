@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {Separator} from "@/components/ui/separator";
 import {useParams, useRouter} from "next/navigation";
-import {BillboardColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/billboards/components/colomns";
+import {BillboardColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/billboards/components/columns";
 import {DataTable} from "@/components/ui/data-table";
 
 interface BillboardClientProps {

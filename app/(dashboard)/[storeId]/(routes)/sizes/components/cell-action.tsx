@@ -1,6 +1,6 @@
 "use client"
 
-import {SizeColumn} from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/colomns";
+import {SizeColumn} from "@/app/(dashboard)/[storeId]/(routes)/sizes/components/columns";
 import {
     DropdownMenu,
     DropdownMenuContent,

@@ -1,6 +1,6 @@
 "use client"
 
-import {ProductColumn} from "@/app/(dashboard)/[storeId]/(routes)/products/components/colomns";
+import {ProductColumn} from "@/app/(dashboard)/[storeId]/(routes)/products/components/columns";
 import {
     DropdownMenu,
     DropdownMenuContent,

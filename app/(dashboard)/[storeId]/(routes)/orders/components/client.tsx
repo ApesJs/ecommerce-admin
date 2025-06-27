@@ -2,7 +2,7 @@
 
 import {Heading} from "@/components/ui/heading";
 import {Separator} from "@/components/ui/separator";
-import {OrderColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/orders/components/colomns";
+import {OrderColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/orders/components/columns";
 import {DataTable} from "@/components/ui/data-table";
 
 interface OrderClientProps {

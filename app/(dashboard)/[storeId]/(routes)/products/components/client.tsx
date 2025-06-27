@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import {Separator} from "@/components/ui/separator";
 import {useParams, useRouter} from "next/navigation";
-import {ProductColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/products/components/colomns";
+import {ProductColumn, columns} from "@/app/(dashboard)/[storeId]/(routes)/products/components/columns";
 import {DataTable} from "@/components/ui/data-table";
 
 interface ProductClientProps {
@@ -29,7 +29,7 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
                 </Button>
             </div>
             <Separator/>
-            <DataTable columns={columns} data={data} searchKey="label" searchLabel="Produk" />
+            <DataTable columns={columns} data={data} searchKey="name" searchLabel="Produk" />
         </>
     )
 }
