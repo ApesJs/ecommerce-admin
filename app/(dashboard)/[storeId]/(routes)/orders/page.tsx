@@ -30,7 +30,7 @@ const OrdersPage = async ({ params }: { params: {storeId: string} }) => {
         totalPrice: formatter.format(item.orderItems.reduce((total, item) => {
             return total + Number(item.product.price)
         }, 0)),
-        isPaid: item.isPaid,
+        isPaid: item.isPaid ? 'Lunas' : 'Menunggu Pembayaran',
         createdAt: format(item.createdAt, 'dd MMMM yyyy', { locale: id })
     }))
 
